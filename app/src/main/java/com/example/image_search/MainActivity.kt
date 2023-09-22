@@ -7,11 +7,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.image_search.Adapter.ViewPager2Adapter
 import com.example.image_search.Search.Fragment_Search
 import com.example.image_search.Locker.Fragment_locker
+import com.example.image_search.Search.Search_Model
 import com.example.image_search.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
+    var likedItems: ArrayList<Search_Model> = ArrayList()
     lateinit var binding: ActivityMainBinding
     lateinit var tab1: Fragment_Search
     lateinit var tab2: Fragment_locker

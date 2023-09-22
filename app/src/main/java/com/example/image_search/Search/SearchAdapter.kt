@@ -1,4 +1,4 @@
-package com.example.image_search.Adapter
+package com.example.image_search.Search
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,16 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.image_search.MainActivity
-import com.example.image_search.Search.Search_Model
+import com.bumptech.glide.Glide
+import com.example.image_search.Util.getDateTimestampWithFormat
 import com.example.image_search.databinding.MainItemBinding
 
-class RecycleAdapter(private val mContext: Context):RecyclerView.Adapter<RecycleAdapter.ItemViewHolder>() {
+class SearchAdapter(private var searchContext: Context) : RecyclerView.Adapter<SearchAdapter.ItemViewHolder>() {
 
     var items = ArrayList<Search_Model>()
 
-
-    //아이템 목록을 초기화하는 메서드입니다.
     fun clearItem() {
         items.clear()
         notifyDataSetChanged()
@@ -30,15 +28,16 @@ class RecycleAdapter(private val mContext: Context):RecyclerView.Adapter<Recycle
 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+
         val currentItem = items[position]
 
-        Glide.with(mContext)
+        Glide.with(searchContext)
             .load(currentItem.Url)
-            .into(holder.iv_image)
+            .into(holder.image)
 
-        holder.iv_like.visibility = if (currentItem.Like) View.VISIBLE else View.INVISIBLE
-        holder.tv_title.text = currentItem.Title
-        holder.tv_datetime.text = getDateFromTimestampWithFormat(
+        holder.title.text = currentItem.Title
+        holder.like.visibility = if (currentItem.Like) View.VISIBLE else View.INVISIBLE
+        holder.datetime.text = getDateTimestampWithFormat(
             currentItem.dateTime,
             //초기 날짜가 "yyyy-MM-dd'T'HH:mm:ss.SSS+09:00" 이러한 형식으로 나타나서 yyyy-MM-dd HH:mm:ss 이러한 형식으로 바꿔줬다.
             "yyyy-MM-dd'T'HH:mm:ss.SSS+09:00",
@@ -50,31 +49,30 @@ class RecycleAdapter(private val mContext: Context):RecyclerView.Adapter<Recycle
 
     inner class ItemViewHolder(binding: MainItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        var iv_image: ImageView = binding.itemImage
-        var iv_like: ImageView = binding.likeImage
-        var tv_title: TextView = binding.itemTitle
-        var tv_datetime: TextView = binding.itemDate
+        var image: ImageView = binding.itemImage
+        var datetime: TextView = binding.itemDate
+        var title: TextView = binding.itemTitle
+        var like: ImageView = binding.likeImage
         var mainLayout: ConstraintLayout = binding.mainLayout
 
         init {
-            iv_like.visibility = View.GONE
-            iv_image.setOnClickListener(this)
+            image.setOnClickListener(this)
+            like.visibility = View.GONE
             mainLayout.setOnClickListener(this)
         }
 
 
-        //각 항목 클릭 시 발생하는 이벤트를 처리하는 메서드입니다.
         override fun onClick(view: View) {
             val position = adapterPosition.takeIf { it != RecyclerView.NO_POSITION } ?: return
             val item = items[position]
 
             item.Like = !item.Like
 
-            if (item.Like) {
-                (mContext as MainActivity).addLikedItem(item)
-            } else {
-                (mContext as MainActivity).removeLikedItem(item)
-            }
+//            if (item.Like) {
+//                (mContext as MainActivity).addLikedItem(item)
+//            } else {
+//                (mContext as MainActivity).removeLikedItem(item)
+//            }
 
             notifyItemChanged(position)
         }

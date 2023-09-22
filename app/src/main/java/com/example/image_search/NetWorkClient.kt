@@ -10,11 +10,9 @@ object NetWorkClient {
     val apiService: Network_Interface
         get() = instance.create(Network_Interface::class.java)
 
-
     private val instance: Retrofit
         private get() {
             val gson = GsonBuilder().setLenient().create()
-
 
             return Retrofit.Builder()
                 .baseUrl(Constants.Search_URL)  // 기본 URL 설정
