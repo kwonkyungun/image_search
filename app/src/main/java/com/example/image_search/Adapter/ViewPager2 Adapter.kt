@@ -1,4 +1,4 @@
-package com.example.image_search
+package com.example.image_search.Adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

@@ -1,19 +1,19 @@
 package com.example.image_search
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
+import com.example.image_search.Adapter.ViewPager2Adapter
+import com.example.image_search.Search.Fragment_Search
+import com.example.image_search.Locker.Fragment_locker
 import com.example.image_search.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    lateinit var tab1: Fragment_home
+    lateinit var tab1: Fragment_Search
     lateinit var tab2: Fragment_locker
 
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initViewPager() {
         var viewPager2Adatper = ViewPager2Adapter(this)
-        viewPager2Adatper.addFragment(Fragment_home())
+        viewPager2Adatper.addFragment(Fragment_Search())
         viewPager2Adatper.addFragment(Fragment_locker())
 
         binding.mainViewpager.apply {
