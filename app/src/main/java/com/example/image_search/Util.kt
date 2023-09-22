@@ -27,7 +27,10 @@ object Util {
         res = df.format(date)
         return res
     }
-
+    fun saveLastSearch(context: Context, query: String) {
+        val prefs = context.getSharedPreferences(Prefs_Name, Context.MODE_PRIVATE)
+        prefs.edit().putString(Pref_key, query).apply()
+    }
 
     fun getLastSearch(context: Context): String? {
         val prefs = context.getSharedPreferences(Prefs_Name, Context.MODE_PRIVATE)

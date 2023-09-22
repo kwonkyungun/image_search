@@ -66,7 +66,7 @@ class Fragment_Search : Fragment() {
         binding.mainSearch.setOnClickListener {
             val search = binding.mainSearchBox.text.toString()
             if (search.isNotEmpty()){
-                saveData()
+                Util.saveLastSearch(requireContext(), search)
                 adapter.clearItem()
                 ImageResults(search)
             }else {
@@ -75,12 +75,6 @@ class Fragment_Search : Fragment() {
 
 
         }
-    }
-    private fun saveData(){
-        val pref = requireContext().getSharedPreferences("pref", Activity.MODE_PRIVATE)
-        val edit = pref.edit()
-        edit.putString("name", binding.mainSearchBox.text.toString())
-        edit.apply()
     }
 
 
